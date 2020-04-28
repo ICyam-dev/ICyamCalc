@@ -26,6 +26,7 @@ namespace ICyamCalc
                         exitOk = true;
                         break;
                     default : //Traitement du calcul de la formule
+                        formule = formule.Replace('.', ','); //Remplace les '.' par des ','
                         memFormule.Add(formule); //enregistrement de la formule
                         nbMem ++;//incrémentation de l'index de la mémoire
                         int c = 30;
@@ -130,7 +131,7 @@ namespace ICyamCalc
         static void PresICyamCalc()
         {
             Console.Clear();
-            Console.WriteLine("ICyamCalc v 0.01a");
+            Console.WriteLine("ICyamCalc v 0.02a");
             Console.WriteLine("----------------------------------------------------------------------------------");
         }
     }
