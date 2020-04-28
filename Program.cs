@@ -20,7 +20,6 @@ namespace ICyamCalc
                     case "cls": //Efface l'écran
                         Console.Clear();
                         PresICyamCalc();
-                        //
                         break;
                     case "exit": //Sortie de la boucle de saisie
                         exitOk = true;
