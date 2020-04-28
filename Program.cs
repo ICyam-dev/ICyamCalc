@@ -21,6 +21,7 @@ namespace ICyamCalc
                         Console.Clear();
                         PresICyamCalc();
                         break;
+                    case "quit": //Sortie de la boucle de saisie
                     case "exit": //Sortie de la boucle de saisie
                         exitOk = true;
                         break;
@@ -128,6 +129,7 @@ namespace ICyamCalc
         //Fonction de présentation de l'appication
         static void PresICyamCalc()
         {
+            Console.Clear();
             Console.WriteLine("ICyamCalc v 0.01a");
             Console.WriteLine("----------------------------------------------------------------------------------");
         }
