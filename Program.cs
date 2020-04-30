@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ICyamCalc
 {
@@ -51,35 +54,48 @@ namespace ICyamCalc
             //Déclaration des varibales
             string formuleGauche, formuleDroite;
             int pos;
-            
+
             //Traitement des parenthesess
             //---------------------------
             //---------------------------
-
-
-
+            if (NbCaracChaine('(', maFormule) == NbCaracChaine(')',maFormule) && NbCaracChaine('(',maFormule) != 0)
+            {
+                int posParaOuverte = PosChar('(', maFormule);
+                int posParaFerme = PosCharInv(')', maFormule);
+                string formuleG = maFormule.Substring(0, posParaOuverte - 1);
+                string formuleM = maFormule.Substring(posParaOuverte, posParaFerme - posParaOuverte-1);
+                string formuleD = maFormule.Substring(posParaFerme);
+                maFormule = formuleG + CalculFormule(formuleM) + formuleD;
+            }
             //Traitement de opérateurs
             //------------------------
             //------------------------
+
+            //Opérateurs "-"
+            pos = PosChar('-', maFormule, 1);
+            if (pos > 1)
+            {
+                //Gére les situation du genre 2*-4 ou 7/-4 où le signe "-" suit un opérateur et ne doit être traiter comme un opérateur mathèmatique
+                string t = "0";
+                if (pos>2)
+                    t = maFormule.Substring(pos-2, 1);
+                if (t != "*" && t != "/" && t != "+" && t != "-")
+                {
+                    formuleGauche = maFormule.Substring(0, pos - 1);
+                    formuleDroite = maFormule.Substring(pos);
+                    maFormule = CalculFormule(Convert.ToString(Convert.ToDouble(CalculFormule(formuleGauche)) - Convert.ToDouble(CalculFormule(formuleDroite))));
+                }
+            }
+
             //Opérateurs "+"
             pos = PosChar('+', maFormule);
-            if (pos>0)
+            if (pos > 0)
             {
                 formuleGauche = maFormule.Substring(0, pos - 1);
                 formuleDroite = maFormule.Substring(pos);
                 //Console.WriteLine(pos + " " + formuleGauche + " " + formuleDroite);
                 maFormule = CalculFormule(Convert.ToString(Convert.ToDouble(CalculFormule(formuleGauche)) + Convert.ToDouble(CalculFormule(formuleDroite))));
             }
-
-            //Opérateurs "-"
-            pos = PosChar('-', maFormule);
-            if (pos > 1)
-            {
-                formuleGauche = maFormule.Substring(0, pos - 1);
-                formuleDroite = maFormule.Substring(pos);
-                maFormule = CalculFormule(Convert.ToString(Convert.ToDouble(CalculFormule(formuleGauche)) - Convert.ToDouble(CalculFormule(formuleDroite))));
-            }
-
             //Opérateurs "*"
             pos = PosChar('*', maFormule);
             if (pos > 0)
@@ -101,30 +117,48 @@ namespace ICyamCalc
             return maFormule;
         }
 
-        //Fonction de position d'une caractère dans une chaine
-        static int PosChar(char charSeach, string chaineRef)
+        //Fonction de position du premier caractère recherché dans une chaine
+        static int PosChar(char charSeach, string chaineRef, int debSeach = 0)
         {
-            int position = 0;
+            int position = debSeach;
             //Boucle sur la longueur de la chaine
-            for (int i=0;i<chaineRef.Length;i++)
+            for (int i = debSeach; i < chaineRef.Length; i++)
             {
                 if (chaineRef[i] == charSeach)
-                    position = i +1;
+                {
+                    position = i + 1;
+                    break;
+                }
+                    
             }
             return position;
         }
 
-        //Fonction de position d'une caractère dans une chaine Inverse
+        //Fonction de position du dernier caractère dans une chaine Inverse
         static int PosCharInv(char charSeach, string chaineRef)
         {
             int position = chaineRef.Length;
             //Boucle sur la longueur de la chaine
-            for (int i = chaineRef.Length; i < 0; i--)
+            for (int i = chaineRef.Length-1; i >= 0; i--)
             {
                 if (chaineRef[i] == charSeach)
+                {
                     position = i + 1;
+                    break;
+                }
             }
             return position;
+        }
+        //Fonction qui compte le nombre ou le caractère charSeach est présent dans la chaineRef
+        static int NbCaracChaine(char charSeach, string chaineRef)
+        {
+            int nbCarac = 0;
+            for (int i = 0; i < chaineRef.Length; i++)
+            {
+                if (chaineRef[i] == charSeach)
+                    nbCarac++;
+            }
+            return nbCarac;
         }
 
         //Fonction de présentation de l'appication
