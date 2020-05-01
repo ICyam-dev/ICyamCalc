@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aandr\\ProjetsDev\\VS2019\\C#\\Console\\ICyamCalc\\ICyamCalc.csproj",
+      "projectUniqueName": "C:\\Users\\aandr\\OneDrive\\Documents\\ProjetsDev\\VS2019\\C#\\Console\\ICyamCalc\\ICyamCalc.csproj",
       "projectName": "ICyamCalc",
-      "projectPath": "C:\\Users\\aandr\\ProjetsDev\\VS2019\\C#\\Console\\ICyamCalc\\ICyamCalc.csproj",
+      "projectPath": "C:\\Users\\aandr\\OneDrive\\Documents\\ProjetsDev\\VS2019\\C#\\Console\\ICyamCalc\\ICyamCalc.csproj",
       "packagesPath": "C:\\Users\\aandr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aandr\\ProjetsDev\\VS2019\\C#\\Console\\ICyamCalc\\obj\\",
+      "outputPath": "C:\\Users\\aandr\\OneDrive\\Documents\\ProjetsDev\\VS2019\\C#\\Console\\ICyamCalc\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
