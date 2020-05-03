@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ICyamCalc
 {
@@ -115,6 +112,14 @@ namespace ICyamCalc
                 maFormule = CalculFormule(Convert.ToString(Convert.ToDouble(CalculFormule(formuleGauche)) / Convert.ToDouble(CalculFormule(formuleDroite))));
             }
 
+            //Opérateur "sqr" : racine carrée
+            pos = maFormule.IndexOf("sqr") + 1;
+            if (pos > 0)
+            {
+                //formuleGauche = maFormule.Substring(0, pos - 1);
+                formuleDroite = maFormule.Substring(pos + 2);
+                maFormule = CalculFormule(Convert.ToString(Math.Sqrt(Convert.ToDouble(CalculFormule(formuleDroite)))));
+            }
             return maFormule;
         }
 
