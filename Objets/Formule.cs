@@ -72,7 +72,7 @@ namespace ICyamCalc.Objets
                 string t = "0";
                 if (pos > 2)
                     t = maFormule.Substring(pos - 2, 1);
-                if (t != "*" && t != "/" && t != "+" && t != "-" && t != "E")
+                if (t != "*" && t != "/" && t != "+" && t != "-" && t.ToUpper() != "E")
                 {
                     Formule formuleGauche = new Formule(maFormule.Substring(0, pos - 1));
                     Formule formuleDroite = new Formule(maFormule.Substring(pos));
@@ -88,7 +88,7 @@ namespace ICyamCalc.Objets
                 string t = "0";
                 if (pos > 2)
                     t = maFormule.Substring(pos - 2, 1);
-                if (t != "E")
+                if (t.ToUpper() != "E" )
                 {
                     Formule formuleGauche = new Formule(maFormule.Substring(0, pos - 1));
                     Formule formuleDroite = new Formule(maFormule.Substring(pos));
