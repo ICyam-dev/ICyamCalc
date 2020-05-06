@@ -29,7 +29,7 @@ namespace ICyamCalc
                         formule = formule.Replace('.', ','); //Remplace les '.' par des ','
                         memFormule.Add(formule); //enregistrement de la formule
                         nbMem ++;//incrémentation de l'index de la mémoire
-                        int c = 30;
+                        int c = 50;
                         int l = Console.CursorTop - 1;
                         string resultat = CalculFormule(formule); //Calcul de la formule
                         Console.SetCursorPosition(c, l);
@@ -57,11 +57,24 @@ namespace ICyamCalc
             //---------------------------
             if (NbCaracChaine('(', maFormule) == NbCaracChaine(')',maFormule) && NbCaracChaine('(',maFormule) != 0)
             {
-                int posParaOuverte = maFormule.IndexOf('(') + 1;
-                int posParaFerme = maFormule.LastIndexOf(')') +1;
-                string formuleG = maFormule.Substring(0, posParaOuverte - 1);
-                string formuleM = maFormule.Substring(posParaOuverte, posParaFerme - posParaOuverte-1);
-                string formuleD = maFormule.Substring(posParaFerme);
+                int posParenOpen = maFormule.IndexOf('(');
+                int posParenClose = 0;
+                int testParenOpen = 1;
+                for (int i = posParenOpen + 1; i < maFormule.Length; i++)
+                {
+                    if (maFormule[i] == '(')
+                        testParenOpen++;
+                    if (maFormule[i] == ')')
+                        testParenOpen--;
+                    if (testParenOpen == 0)
+                    {
+                        posParenClose = i;
+                        break;
+                    }
+                }
+                string formuleG = maFormule.Substring(0, posParenOpen);
+                string formuleM = maFormule.Substring(posParenOpen + 1, posParenClose - posParenOpen - 1);
+                string formuleD = maFormule.Substring(posParenClose + 1);
                 maFormule = formuleG + CalculFormule(formuleM) + formuleD;
             }
             //Traitement de opérateurs
@@ -76,7 +89,7 @@ namespace ICyamCalc
                 string t = "0";
                 if (pos>2)
                     t = maFormule.Substring(pos-2, 1);
-                if (t != "*" && t != "/" && t != "+" && t != "-")
+                if (t != "*" && t != "/" && t != "+" && t != "-" && t != "E")
                 {
                     formuleGauche = maFormule.Substring(0, pos - 1);
                     formuleDroite = maFormule.Substring(pos);
@@ -88,10 +101,16 @@ namespace ICyamCalc
             pos = maFormule.IndexOf('+') + 1;
             if (pos > 0)
             {
-                formuleGauche = maFormule.Substring(0, pos - 1);
-                formuleDroite = maFormule.Substring(pos);
-                //Console.WriteLine(pos + " " + formuleGauche + " " + formuleDroite);
-                maFormule = CalculFormule(Convert.ToString(Convert.ToDouble(CalculFormule(formuleGauche)) + Convert.ToDouble(CalculFormule(formuleDroite))));
+                string t = "0";
+                if (pos > 2)
+                    t = maFormule.Substring(pos - 2, 1);
+                if (t != "E")
+                {
+                    formuleGauche = maFormule.Substring(0, pos - 1);
+                    formuleDroite = maFormule.Substring(pos);
+                    //Console.WriteLine(pos + " " + formuleGauche + " " + formuleDroite);
+                    maFormule = CalculFormule(Convert.ToString(Convert.ToDouble(CalculFormule(formuleGauche)) + Convert.ToDouble(CalculFormule(formuleDroite))));
+                }
             }
 
             //Opérateurs "*"
@@ -112,13 +131,25 @@ namespace ICyamCalc
                 maFormule = CalculFormule(Convert.ToString(Convert.ToDouble(CalculFormule(formuleGauche)) / Convert.ToDouble(CalculFormule(formuleDroite))));
             }
 
-            //Opérateur "sqr" : racine carrée
-            pos = maFormule.IndexOf("sqr") + 1;
+            //Opérateurs "^" - Opérateur de Puissance
+            pos = maFormule.IndexOf('^') + 1;
             if (pos > 0)
             {
-                //formuleGauche = maFormule.Substring(0, pos - 1);
-                formuleDroite = maFormule.Substring(pos + 2);
-                maFormule = CalculFormule(Convert.ToString(Math.Sqrt(Convert.ToDouble(CalculFormule(formuleDroite)))));
+                formuleGauche = maFormule.Substring(0, pos - 1);
+                formuleDroite = maFormule.Substring(pos);
+                maFormule = CalculFormule(Convert.ToString(Math.Pow(Convert.ToDouble(CalculFormule(formuleGauche)), Convert.ToDouble(CalculFormule(formuleDroite)))));
+            }
+
+            //Opérateur "sqr" : racine carrée
+            if (maFormule.Length >= 4)
+            {
+                pos = maFormule.IndexOf("sqr") + 1;
+                if (pos > 0)
+                {
+                    //formuleGauche = maFormule.Substring(0, pos - 1);
+                    formuleDroite = maFormule.Substring(pos + 2);
+                    maFormule = CalculFormule(Convert.ToString(Math.Sqrt(Convert.ToDouble(CalculFormule(formuleDroite)))));
+                }
             }
             return maFormule;
         }
@@ -139,7 +170,7 @@ namespace ICyamCalc
         static void PresICyamCalc()
         {
             Console.Clear();
-            Console.WriteLine("ICyamCalc v 0.03a");
+            Console.WriteLine("ICyamCalc v 0.04a");
             Console.WriteLine("----------------------------------------------------------------------------------");
         }
     }
