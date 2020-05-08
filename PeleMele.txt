@@ -1,0 +1,19 @@
+﻿Les instructions a calculer se termine toutes par ';'
+
+Chaque instruction est enregistrer dans une liste pour être retenues en mémoire
+
+Dans les instruction a calculer la #xxx# sont remplacer par les instruction déja traiter en mémoire.
+
+Après l'instruction on peut definir une variable de paramètrage de calcul comme l'unité angulaire pour les calculs trigo
+Ce parametre de calculs se placent après l'instruction de calcul (donc juste après le ';') et seront identifier par un $para$
+exemples : 
+>2+sin(10); $deg$ 'Calcul trigo qui se fera en utilisant l'unité engulaire degré
+>4+7; $bin$ 'addition en decimal dont le resultat s'affichera en binaire
+il ne peut y avoir qu'un seul paramètre de calcul
+
+Après ce paramètre de calcul, on peut enregister une remarque en texte libre qui doit obligatoirement commencé par "'"
+voir les exmple précedents, cette remarque est juste enregistrer pour noter ce a quoi correspont le calcul de l'instruction
+
+*****************************************************************************************************
+
+Toute l'analyse de la chaine saisie au clavier se fait grace aux methode objet.

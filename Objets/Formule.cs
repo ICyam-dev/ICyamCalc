@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -8,10 +9,12 @@ namespace ICyamCalc.Objets
     class Formule
     {
         //Propriété
+        //************************************************************************************
         private string chaineFormule { get; set; }
         private string uniteAngle { get; set; }
         
         //Constructeur
+        //************************************************************************************
         public Formule(string texteFormule, string angleTrigo = "rad")
         {
             chaineFormule = texteFormule.ToLower();
@@ -21,13 +24,39 @@ namespace ICyamCalc.Objets
         //Methodes
         //************************************************************************************
 
+        //Methode pour récupérer l'unité angulaire pour les calculs trigo
+        public string UniteAngle()
+        {
+            return this.uniteAngle;
+        }
+
+        //Methode pour modifier l'unite angulaire pour les calculs trigo
+        public void NewUniteAngle(string newUnitAngle)
+        {
+            this.uniteAngle = newUnitAngle;
+        }
+
         //Methode pour récupérer le texte de la formule
         public string TexteFormule()
         {
             return this.chaineFormule;
         }
 
-        //Fonction de calcul de formule
+        //Methode pour remplacer la formule
+        public void RemplaceFormule(string nouvelleFormule)
+        {
+            this.chaineFormule = nouvelleFormule;
+        }
+
+        //Méthode d'analyse du diese présent dans la formule
+        public string AnalyseDieses()
+        {
+            string maFormule = chaineFormule;
+
+            return maFormule;
+        }
+
+        //Methode de calcul de formule
         public string CalculFormule()
         {
             //Déclaration des varibales
