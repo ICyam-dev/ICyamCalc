@@ -9,14 +9,19 @@ namespace ICyamCalc
         static void Main(string[] args)
         {
             PresICyamCalc(); //Présentation de ICyamCalc
-            List<string> memFormule = new List<string>(); //Enregistrer les formule en mémoire
-            int nbMem = 0; //Nombre de formule en mémoire
+            List<string> memInstruction = new List<string>(); //Enregistrer les instructions en mémoire
+            int nbMem = 0; //Nombre d'instruction en mémoire
             do
             {
                 Console.Write(nbMem + 1 + ">");
-                Formule formule = new Formule(Console.ReadLine());
+                string instructionBrute = Console.ReadLine();
+
+                Instruction instruction = new Instruction(instructionBrute); //Instance de l'instruction brute
+                //instruction.Analyse(); //Analyse de la chaine
+                instruction.MemoireInFormule(memInstruction); //Inclusion des mémoire eventuelle
+
                 bool exitOk = false;
-                string maFormule = formule.TexteFormule();
+                string maFormule = instruction.FormuleACalculer();
                 switch (maFormule)
                 {
                     case "cls": //Efface l'écran
@@ -27,13 +32,19 @@ namespace ICyamCalc
                     case "exit": //Sortie de la boucle de saisie
                         exitOk = true;
                         break;
+                    case "Err001":
+                        Console.WriteLine("Erreur : Fin d'instruction \";\" manquante");
+                        break;
+                    case "Err002":
+                        Console.WriteLine("Erreur : Erreur d'écriture dans les inclusions de mémoire");
+                        break;
                     default : //Traitement du calcul de la formule
                         maFormule = maFormule.Replace('.', ','); //Remplace les '.' par des ','
-                        memFormule.Add(maFormule); //enregistrement de la formule
+                        memInstruction.Add(instructionBrute); //enregistrement de l'instruction saisie
                         nbMem ++;//incrémentation de l'index de la mémoire
                         int c = 50;
                         int l = Console.CursorTop - 1;
-                        string resultat = formule.CalculFormule(); //Calcul de la formule
+                        string resultat = instruction.CalculFormule(); //Calcul de la formule
                         Console.SetCursorPosition(c, l);
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
