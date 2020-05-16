@@ -62,7 +62,7 @@ namespace ICyamCalc
         static void PresICyamCalc()
         {
             Console.Clear();
-            Console.WriteLine("ICyamCalc v 0.04a");
+            Console.WriteLine("ICyamCalc v 0.05a");
             Console.WriteLine("----------------------------------------------------------------------------------");
         }
     }
